@@ -1,0 +1,193 @@
+﻿<UserControl x:Class="TextEditor.UI.Controls.RichTextEditor" x:Name="uxRichTextEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:asis="clr-namespace:TextEditor.UI.AttachedProperties"
+             xmlns:ViewModel="clr-namespace:TextEditor.UI.ViewModel"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance ViewModel:Presenter}"
+             d:DesignHeight="500" d:DesignWidth="500">
+    <Grid>
+        <Grid.Resources>
+            
+            <Style x:Key="formatTextStyle" TargetType="{x:Type Button}" >
+                <Setter Property="FontFamily" Value="Palatino Linotype" />
+                <Setter Property="Width" Value="30" />
+                <Setter Property="FontSize" Value ="14" />
+                <Setter Property="CommandTarget" Value="{Binding ElementName=mainRTB}" />
+            </Style>
+
+            <Style x:Key="formatImageStyle" TargetType="{x:Type Button}" >
+                <Setter Property="Width" Value="30" />
+                <Setter Property="CommandTarget" Value="{Binding ElementName=mainRTB}" />
+            </Style>
+            
+            
+            <!--My own styles-->
+            <Style x:Key="MenuStyle" TargetType="Menu">
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="FontFamily" Value="Consolas" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+
+            <Style x:Key="StatusBarStyle" TargetType="StatusBar">
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="BorderThickness" Value="0,2,0,0" />
+                <Setter Property="Background" Value="Snow" />
+                <Setter Property="BorderBrush" Value="Wheat" />
+            </Style>
+
+            <Style x:Key="StatusBarItemStyle" TargetType="StatusBarItem" >
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+            </Style>
+
+            <Style x:Key="StatusTextBlockStyle" TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Consolas" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+            
+            <Style x:Key="ToolBarStyle" TargetType="ToolBar">
+                <Setter Property="Height" Value="30" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="LightGray" />
+            </Style>
+
+            <Style x:Key="EditAreaStyle" TargetType="RichTextBox">
+                <Setter Property="AcceptsTab" Value="True" />
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="LightGray" />
+                <Setter Property="TextBlock.LineHeight" Value="1" />
+                <Setter Property="FontFamily" Value="{Binding ElementName=FontFamilyComboBox, Path=SelectedItem}" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
+            </Style>
+
+            <Style x:Key="FontFamilyComboBoxStyle" TargetType="ComboBox">
+                <Setter Property="SelectedIndex" Value="58" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Width" Value="120" />
+            </Style>
+            
+        </Grid.Resources>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25px" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="25px" />
+            </Grid.RowDefinitions>
+
+            <Menu Grid.Row="0" Style="{StaticResource MenuStyle}" >
+                <MenuItem Header="File">
+                    <MenuItem Header="New"  
+                              InputGestureText="Ctrl+N" 
+                              ToolTip="Clear editor's workspace" />
+                    
+                    <MenuItem Header="Open..." 
+                              InputGestureText="Ctrl+O"
+                              ToolTip="Read source code from file" />
+                    
+                    <MenuItem Header="Save as..." 
+                              InputGestureText="Ctrl+S"
+                              ToolTip="Save editor's content to file" />
+                </MenuItem>
+
+                <MenuItem Header="Help">
+                    <MenuItem Header="About program..." 
+                              ToolTip="Show information about this program" />
+                </MenuItem>
+            </Menu>
+
+            <DockPanel Grid.Row="1" Name="mainPanel">
+                
+                <ToolBar DockPanel.Dock="Top" ToolBarTray.IsLocked="True"
+                         Style="{StaticResource ToolBarStyle}">
+                    
+                    <Button Style="{StaticResource formatImageStyle}" Command="ApplicationCommands.Cut" ToolTip="Cut">
+                        <Image Source="Images\editcut.png"></Image>
+                    </Button>
+                    <Button Style="{StaticResource formatImageStyle}" Command="ApplicationCommands.Copy" ToolTip="Copy">
+                        <Image Source="Images\EditCopy.png"></Image>
+                    </Button>
+                    <Button Style="{StaticResource formatImageStyle}" Command="ApplicationCommands.Paste" ToolTip="Paste">
+                        <Image Source="Images\EditPaste.png"></Image>
+                    </Button>
+                    <Button Style="{StaticResource formatImageStyle}" Command="ApplicationCommands.Undo" ToolTip="Undo">
+                        <Image Source="Images\EditUndo.png"></Image>
+                    </Button>
+                    <Button Style="{StaticResource formatImageStyle}" Command="ApplicationCommands.Redo" ToolTip="Redo">
+                        <Image Source="Images\EditRedo.png"></Image>
+                    </Button>
+
+                    <ComboBox Name="FontFamilyComboBox" 
+                              ItemsSource="{x:Static Fonts.SystemFontFamilies}"
+                              Style="{StaticResource FontFamilyComboBoxStyle}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" FontFamily="{Binding}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <Button Style="{StaticResource formatTextStyle}" Command="EditingCommands.ToggleBold" ToolTip="Bold">
+                        <TextBlock FontWeight="Bold">B</TextBlock>
+                    </Button>
+                    <Button Style="{StaticResource formatTextStyle}" Command="EditingCommands.ToggleItalic" ToolTip="Italic">
+                        <TextBlock FontStyle="Italic" FontWeight="Bold">I</TextBlock>
+                    </Button>
+                    <Button Style="{StaticResource formatTextStyle}" Command="EditingCommands.ToggleUnderline" ToolTip="Underline">
+                        <TextBlock TextDecorations="Underline" FontWeight="Bold">U</TextBlock>
+                    </Button>
+                    <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.IncreaseFontSize" ToolTip="Grow Font">
+                        <Image Source="Images\CharacterGrowFont.png"></Image>
+                    </Button>
+                    <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.DecreaseFontSize" ToolTip="Shrink Font">
+                        <Image Source="Images\CharacterShrinkFont.png"></Image>
+                    </Button>
+
+                    <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.ToggleBullets" ToolTip="Bullets">
+                        <Image Source="Images\ListBullets.png"></Image>
+                    </Button>
+                    <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.ToggleNumbering" ToolTip="Numbering">
+                        <Image Source="Images/ListNumbering.png"></Image>
+                    </Button>
+                    <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.AlignLeft" ToolTip="Align Left">
+                        <Image Source="Images\ParagraphLeftJustify.png"></Image>
+                    </Button>
+                    <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.AlignCenter" ToolTip="Align Center">
+                        <Image Source="Images\ParagraphCenterJustify.png"></Image>
+                    </Button>
+                    <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.AlignRight" ToolTip="Align Right">
+                        <Image Source="Images\ParagraphRightJustify.png"></Image>
+                    </Button>
+                    <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.AlignJustify" ToolTip="Align Justify">
+                        <Image Source="Images\ParagraphFullJustify.png"></Image>
+                    </Button>
+                    <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.IncreaseIndentation" ToolTip="Increase Indent">
+                        <Image Source="Images\ParagraphIncreaseIndentation.png"></Image>
+                    </Button>
+                    <Button Style="{StaticResource formatImageStyle}" Command="EditingCommands.DecreaseIndentation" ToolTip="Decrease Indent">
+                        <Image Source="Images\ParagraphDecreaseIndentation.png"></Image>
+                    </Button>
+                    
+                </ToolBar>
+
+                <RichTextBox Name="mainRTB"
+                             Style="{StaticResource EditAreaStyle}"
+                             asis:RichTextboxAssistant.BoundDocument="{Binding Path=Text, ElementName=uxRichTextEditor}"/>
+            </DockPanel>
+
+            <StatusBar Grid.Row="2" Style="{StaticResource StatusBarStyle}">
+                <StatusBarItem Style="{StaticResource StatusBarItemStyle}">
+                    <TextBlock Text="length: 0  lines: 1" 
+                               Style="{StaticResource StatusTextBlockStyle}" />
+                </StatusBarItem>
+            </StatusBar>
+        </Grid>
+    </Grid>
+</UserControl>
