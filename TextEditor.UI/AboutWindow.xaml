@@ -1,0 +1,112 @@
+﻿<Window x:Class="TextEditor.UI.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="About" Height="350" Width="350" 
+        ShowInTaskbar="False" 
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style x:Key="CaptionStyle" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
+        <Style x:Key="SubcaptionStyle" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Left" />
+            <Setter Property="FontStyle" Value="Italic" />
+            <Setter Property="Margin" Value="10,0,10,0" />
+            <Setter Property="Width" Value="80" />
+        </Style>
+
+        <Style x:Key="MainTextStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="10,0,10,0" />
+            <Setter Property="Block.TextAlignment" Value="Left" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <TabControl Margin="5">
+            <TabItem Header="Program Info">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="General" Style="{StaticResource CaptionStyle}" />
+                    <TextBlock Style="{StaticResource MainTextStyle}">
+                        This program is intended to <Bold>create, view and edit </Bold>
+                        text files. Plain text is stored in .txt file, while
+                        text style is stored in separate .xaml file.
+                        
+                    </TextBlock>
+
+                    <TextBlock Text="Supported Features" Style="{StaticResource CaptionStyle}" />
+
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Style="{StaticResource MainTextStyle}">
+                            - Creating new file
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource MainTextStyle}">
+                            - Editing existing file
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource MainTextStyle}">
+                            - Applying decorations: <Bold>bold</Bold>, <Italic>talic</Italic>, <Underline>underline</Underline>
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource MainTextStyle}">
+                            - Numbering
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource MainTextStyle}">
+                            - Font resizing
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource MainTextStyle}">
+                            - Alignment: left, center, right, justified
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource MainTextStyle}">
+                            - Undoing/redoing
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource MainTextStyle}">
+                            - Intendation
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource MainTextStyle}">
+                            - Copy/Cut/Paste
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource MainTextStyle}">
+                            - Image insertion
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+
+            </TabItem>
+            <TabItem Header="Author">
+                <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource SubcaptionStyle}">
+                            <Bold>Author:</Bold>
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource MainTextStyle}" Text="Ivan Mykhailiuk" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource SubcaptionStyle}">
+                            <Bold>Group:</Bold>
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource MainTextStyle}" Text="AMi-43" />
+                    </StackPanel>
+                    <StackPanel Margin="0,10,0,10">
+                        <TextBlock Style="{StaticResource CaptionStyle}">
+                            Source code
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource MainTextStyle}" TextAlignment="Center" >
+                            <Hyperlink NavigateUri="https://github.com/IvMykh/MyAssembler/tree/master" >
+                                https://github.com/IvMykh/MyAssembler/tree/master
+                            </Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <TextBlock Style="{StaticResource MainTextStyle}" TextAlignment="Center">
+                        Copyright © 2016. All rights reserved.
+                    </TextBlock>
+                </StackPanel>
+
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

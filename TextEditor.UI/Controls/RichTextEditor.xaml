@@ -8,6 +8,7 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance ViewModel:Presenter}"
              d:DesignHeight="500" d:DesignWidth="500">
+
     <Grid>
         <Grid.Resources>
             
@@ -47,7 +48,10 @@
 
             <Style x:Key="StatusTextBlockStyle" TargetType="TextBlock">
                 <Setter Property="FontFamily" Value="Consolas" />
+                <Setter Property="TextAlignment" Value="Left" />
                 <Setter Property="FontSize" Value="12" />
+                <Setter Property="Width" Value="200" />
+                <Setter Property="Margin" Value="5,0,0,0" />
             </Style>
             
             <Style x:Key="ToolBarStyle" TargetType="ToolBar">
@@ -62,7 +66,8 @@
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="BorderBrush" Value="LightGray" />
                 <Setter Property="TextBlock.LineHeight" Value="1" />
-                <Setter Property="FontFamily" Value="{Binding ElementName=FontFamilyComboBox, Path=SelectedItem}" />
+                <!--<Setter Property="FontFamily" Value="{Binding ElementName=FontFamilyComboBox, Path=SelectedItem}" />-->
+                <Setter Property="FontFamily" Value="Verdana" />
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
             </Style>
@@ -86,19 +91,38 @@
                 <MenuItem Header="File">
                     <MenuItem Header="New"  
                               InputGestureText="Ctrl+N" 
+                              Command="{Binding NewFileCommand}"
+                              CommandParameter="{Binding ElementName=mainRTB}"
                               ToolTip="Clear editor's workspace" />
                     
                     <MenuItem Header="Open..." 
                               InputGestureText="Ctrl+O"
-                              ToolTip="Read source code from file" />
-                    
-                    <MenuItem Header="Save as..." 
+                              Command="{Binding OpenFileCommand}"
+                              CommandParameter="{Binding ElementName=mainRTB}"
+                              ToolTip="Load text file" />
+
+                    <MenuItem Header="Save"
                               InputGestureText="Ctrl+S"
+                              Command="{Binding SaveCommand}"
+                              CommandParameter="{Binding ElementName=mainRTB}"
+                              ToolTip="Save editor's content to file" />
+
+                    <MenuItem Header="Save as..." 
+                              Command="{Binding SaveToFileCommand}"
+                              CommandParameter="{Binding ElementName=mainRTB}"
                               ToolTip="Save editor's content to file" />
                 </MenuItem>
-
+                
+                <MenuItem Header="Insert">
+                    <MenuItem Header="Picture..." 
+                              Command="{Binding InsertPictureCommand}"
+                              CommandParameter="{Binding ElementName=mainRTB}"
+                              ToolTip="Save editor's content to file" />
+                </MenuItem>
+                
                 <MenuItem Header="Help">
-                    <MenuItem Header="About program..." 
+                    <MenuItem Header="About program..."
+                              Command="{Binding ShowAboutCommand}"
                               ToolTip="Show information about this program" />
                 </MenuItem>
             </Menu>
@@ -124,7 +148,7 @@
                         <Image Source="Images\EditRedo.png"></Image>
                     </Button>
 
-                    <ComboBox Name="FontFamilyComboBox" 
+                    <!--<ComboBox Name="FontFamilyComboBox" 
                               ItemsSource="{x:Static Fonts.SystemFontFamilies}"
                               Style="{StaticResource FontFamilyComboBoxStyle}">
                         <ComboBox.ItemTemplate>
@@ -132,7 +156,7 @@
                                 <TextBlock Text="{Binding}" FontFamily="{Binding}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
-                    </ComboBox>
+                    </ComboBox>-->
 
                     <Button Style="{StaticResource formatTextStyle}" Command="EditingCommands.ToggleBold" ToolTip="Bold">
                         <TextBlock FontWeight="Bold">B</TextBlock>
@@ -184,10 +208,32 @@
 
             <StatusBar Grid.Row="2" Style="{StaticResource StatusBarStyle}">
                 <StatusBarItem Style="{StaticResource StatusBarItemStyle}">
-                    <TextBlock Text="length: 0  lines: 1" 
+                    <TextBlock Text="{Binding Status}" Style="{StaticResource StatusTextBlockStyle}" />
+                </StatusBarItem>
+                
+                <StatusBarItem Style="{StaticResource StatusBarItemStyle}">
+                    <TextBlock Text="{Binding CommittedSize}" 
                                Style="{StaticResource StatusTextBlockStyle}" />
                 </StatusBarItem>
             </StatusBar>
         </Grid>
     </Grid>
+
+    <Control.InputBindings>
+        <KeyBinding Modifiers="Control" Key="N" 
+                    Command="{Binding NewFileCommand}" 
+                    CommandParameter="{Binding ElementName=mainRTB}" />
+
+        <KeyBinding Modifiers="Control" Key="O" 
+                    Command="{Binding OpenFileCommand}"
+                    CommandParameter="{Binding ElementName=mainRTB}" />
+
+        <KeyBinding Modifiers="Control" Key="S" 
+                    Command="{Binding SaveCommand}" 
+                    CommandParameter="{Binding ElementName=mainRTB}" />
+
+        <KeyBinding Modifiers="Control" Key="H" 
+                    Command="{Binding ShowAboutCommand}" 
+                    CommandParameter="{Binding ElementName=mainRTB}" />
+    </Control.InputBindings>
 </UserControl>

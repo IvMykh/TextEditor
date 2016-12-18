@@ -4,11 +4,12 @@
         xmlns:attached="clr-namespace:TextEditor.UI.AttachedProperties"
         xmlns:ViewModel="clr-namespace:TextEditor.UI.ViewModel"
         x:Class="TextEditor.UI.MainWindow"
-        Title="{Binding WindowTitle}" Height="500" Width="700">
+        Title="{Binding CurrentFile}" Height="500" Width="700">
 
     <Window.DataContext>
         <ViewModel:Presenter />
     </Window.DataContext>
 
-    <ctl:RichTextEditor Text="{Binding Text, Mode=TwoWay}" />
+    <ctl:RichTextEditor  />
+    <!--Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
 </Window>

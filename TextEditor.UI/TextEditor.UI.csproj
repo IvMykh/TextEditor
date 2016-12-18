@@ -52,9 +52,13 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Infrastructure\DelegateCommand.cs" />
     <Compile Include="ViewModel\Infrastructure\MyCommand.cs" />
     <Compile Include="ViewModel\Infrastructure\ObservableObject.cs" />
+    <Compile Include="ViewModel\Infrastructure\ParameterizedDelegateCommand.cs" />
     <Compile Include="ViewModel\Presenter.cs" />
     <Compile Include="XamlToHtmlParser\HtmlCssParser.cs" />
     <Compile Include="XamlToHtmlParser\HtmlFromXamlConverter.cs" />
@@ -63,6 +67,10 @@
     <Compile Include="XamlToHtmlParser\HtmlSchema.cs" />
     <Compile Include="XamlToHtmlParser\HtmlTokenType.cs" />
     <Compile Include="XamlToHtmlParser\HtmlToXamlConverter.cs" />
+    <Page Include="AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\RichTextEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -131,6 +139,14 @@
     <Resource Include="Controls\Images\paragraphrightjustify.png" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <None Include="Data\A letter to friend.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\lviv opera.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
