@@ -95,7 +95,7 @@
                             Source code
                         </TextBlock>
                         <TextBlock Style="{StaticResource MainTextStyle}" TextAlignment="Center" >
-                            <Hyperlink NavigateUri="https://github.com/IvMykh/MyAssembler/tree/master" >
+                            <Hyperlink NavigateUri="https://github.com/IvMykh/TextEditor" >
                                 https://github.com/IvMykh/MyAssembler/tree/master
                             </Hyperlink>
                         </TextBlock>
